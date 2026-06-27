@@ -2,31 +2,54 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>Train Trouble</title>
+  <title>Train Trouble 2</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="game">
-    <h1>🚆 Train Trouble</h1>
-    <p>당신은 기관사입니다. 고장이 나면 알맞은 정비사를 부르세요.</p>
+    <h1>🚆 Train Trouble 2</h1>
+    <p>기관사가 되어 고장을 판단하고 알맞은 정비팀을 부르세요!</p>
 
     <div class="track">
       <div id="train">🚆</div>
     </div>
 
-    <div class="panel">
-      <p>속도: <span id="speed">0</span> km/h</p>
-      <p>승객 만족도: <span id="happy">100</span>%</p>
-      <p>상태: <span id="message">대기 중</span></p>
+    <div class="dashboard">
+      <div>🚄 속도: <span id="speed">0</span> km/h</div>
+      <div>😊 승객 만족도: <span id="happy">100</span>%</div>
+      <div>⭐ 점수: <span id="score">0</span></div>
+      <div>🔧 고장 건수: <span id="failureCount">0</span></div>
     </div>
 
-    <button onclick="startTrain()">출발</button>
-    <button onclick="stopTrain()">정지</button>
+    <div class="message-box">
+      <div id="failureIcon">✅</div>
+      <div id="message">대기 중입니다.</div>
+    </div>
 
-    <h3>정비사 호출</h3>
-    <button onclick="callMechanic('electric')">전기 정비공</button>
-    <button onclick="callMechanic('wheel')">바퀴 정비공</button>
-    <button onclick="callMechanic('engine')">엔진 정비공</button>
+    <div class="complaint-box">
+      <div>🗣️ 손님 컴플레인</div>
+      <div id="complaint">아직 컴플레인이 없습니다.</div>
+    </div>
+
+    <div class="controls">
+      <button onclick="startTrain()">▶️ 출발</button>
+      <button onclick="stopTrain()">⏹️ 정지</button>
+      <button onclick="emergencyBrake()">🚨 비상제동</button>
+    </div>
+
+    <h3>정비팀 호출</h3>
+
+    <div class="mechanics">
+      <button onclick="callMechanic('electric')">⚡<br>전기팀</button>
+      <button onclick="callMechanic('wheel')">🛞<br>바퀴팀</button>
+      <button onclick="callMechanic('engine')">🛠️<br>엔진팀</button>
+      <button onclick="callMechanic('brake')">🧯<br>브레이크팀</button>
+      <button onclick="callMechanic('signal')">🚦<br>신호팀</button>
+      <button onclick="callMechanic('aircon')">❄️<br>냉난방팀</button>
+      <button onclick="callMechanic('door')">🚪<br>출입문팀</button>
+    </div>
+
+    <button class="reset" onclick="resetGame()">🔄 다시 시작</button>
   </div>
 
   <script src="script.js"></script>
