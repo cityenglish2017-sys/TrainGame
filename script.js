@@ -1,3 +1,88 @@
+let audioContext = null;
+let trainSoundTimer = null;
+
+function startTrainSound() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  stopTrainSound();
+
+  trainSoundTimer = setInterval(() => {
+    makeClickSound();
+    setTimeout(makeClickSound, 120);
+  }, 450);
+}
+
+function stopTrainSound() {
+  if (trainSoundTimer) {
+    clearInterval(trainSoundTimer);
+    trainSoundTimer = null;
+  }
+}
+
+function makeClickSound() {
+  if (!audioContext) return;
+
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = "square";
+  oscillator.frequency.setValueAtTime(160, audioContext.currentTime);
+
+  gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.08);
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + 0.08);
+}
+
+function playBrakeSound() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = "sawtooth";
+  oscillator.frequency.setValueAtTime(700, audioContext.currentTime);
+  oscillator.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.6);
+
+  gain.gain.setValueAtTime(0.12, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.6);
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + 0.6);
+}
+
+function playSuccessSound() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(700, audioContext.currentTime);
+  oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.15);
+
+  gain.gain.setValueAtTime(0.1, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.35);
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + 0.35);
+}
 let speed = 0;
 let happy = 100;
 let score = 0;
