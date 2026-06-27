@@ -6,7 +6,7 @@ let currentFailure = null;
 let moveTimer = null;
 let failureTimer = null;
 let failureCount = 0;
-let angle = 0;
+let angle = 210;
 
 const speedText = document.getElementById("speed");
 const happyText = document.getElementById("happy");
@@ -15,12 +15,12 @@ const failureCountText = document.getElementById("failureCount");
 const messageText = document.getElementById("message");
 const complaintText = document.getElementById("complaint");
 const failureIcon = document.getElementById("failureIcon");
-const train = document.getElementById("train");
+const trainSvg = document.getElementById("trainSvg");
 
-const centerX = 480;
+const centerX = 450;
 const centerY = 220;
-const radiusX = 350;
-const radiusY = 165;
+const radiusX = 340;
+const radiusY = 150;
 
 const failures = [
   { type: "electric", icon: "⚡", name: "전기 계통 이상", message: "전기팀이 필요합니다.", complaints: ["불이 깜빡거려요!", "안내 방송이 끊겨요!", "충전기가 안 돼요!"] },
@@ -40,15 +40,13 @@ function updateTrainPosition() {
   const x = centerX + radiusX * Math.cos(rad);
   const y = centerY + radiusY * Math.sin(rad);
 
-  const nextRad = (angle + 3) * Math.PI / 180;
+  const nextRad = (angle + 2) * Math.PI / 180;
   const nextX = centerX + radiusX * Math.cos(nextRad);
   const nextY = centerY + radiusY * Math.sin(nextRad);
 
   const rotation = Math.atan2(nextY - y, nextX - x) * 180 / Math.PI;
 
-  train.style.left = (x - 65) + "px";
-  train.style.top = (y - 24) + "px";
-  train.style.transform = `rotate(${rotation}deg)`;
+  trainSvg.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotation})`);
 }
 
 function updateScreen() {
@@ -79,14 +77,14 @@ function startTrain() {
   clearInterval(moveTimer);
   moveTimer = setInterval(() => {
     if (running) {
-      angle += 3;
-      if (angle >= 360) {
-        angle = 0;
+      angle += 2;
+      if (angle >= 570) {
+        angle = 210;
         score += 10;
       }
       updateScreen();
     }
-  }, 90);
+  }, 80);
 
   clearTimeout(failureTimer);
   failureTimer = setTimeout(makeFailure, randomTime());
@@ -173,7 +171,7 @@ function resetGame() {
   running = false;
   currentFailure = null;
   failureCount = 0;
-  angle = 0;
+  angle = 210;
 
   clearInterval(moveTimer);
   clearTimeout(failureTimer);
