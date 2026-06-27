@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Train Trouble</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game">
+    <h1>🚆 Train Trouble</h1>
+    <p>당신은 기관사입니다. 고장이 나면 알맞은 정비사를 부르세요.</p>
+
+    <div class="track">
+      <div id="train">🚆</div>
+    </div>
+
+    <div class="panel">
+      <p>속도: <span id="speed">0</span> km/h</p>
+      <p>승객 만족도: <span id="happy">100</span>%</p>
+      <p>상태: <span id="message">대기 중</span></p>
+    </div>
+
+    <button onclick="startTrain()">출발</button>
+    <button onclick="stopTrain()">정지</button>
+
+    <h3>정비사 호출</h3>
+    <button onclick="callMechanic('electric')">전기 정비공</button>
+    <button onclick="callMechanic('wheel')">바퀴 정비공</button>
+    <button onclick="callMechanic('engine')">엔진 정비공</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
