@@ -8,7 +8,6 @@ let failureTimer = null;
 let failureCount = 0;
 let angle = 210;
 
-// 소리 관련
 let audioContext = null;
 let trainSoundTimer = null;
 
@@ -20,6 +19,11 @@ const messageText = document.getElementById("message");
 const complaintText = document.getElementById("complaint");
 const failureIcon = document.getElementById("failureIcon");
 const trainSvg = document.getElementById("trainSvg");
+const ktxShape = document.getElementById("ktxShape");
+const failureEffect = document.getElementById("failureEffect");
+const effectIcon1 = document.getElementById("effectIcon1");
+const effectIcon2 = document.getElementById("effectIcon2");
+const effectIcon3 = document.getElementById("effectIcon3");
 
 const centerX = 450;
 const centerY = 220;
@@ -27,23 +31,22 @@ const radiusX = 340;
 const radiusY = 150;
 
 const failures = [
-  { type: "electric", icon: "⚡", name: "전기 계통 이상", message: "전기팀이 필요합니다.", complaints: ["불이 깜빡거려요!", "안내 방송이 끊겨요!", "충전기가 안 돼요!"] },
-  { type: "electric", icon: "🔋", name: "배터리 방전", message: "전기팀을 호출하세요.", complaints: ["열차가 갑자기 멈췄어요!", "불이 꺼졌어요!", "왜 전기가 안 들어와요?"] },
-  { type: "wheel", icon: "🛞", name: "바퀴 이상 진동", message: "바퀴팀이 필요합니다.", complaints: ["열차가 덜컹거려요!", "너무 흔들려요!", "소리가 이상해요!"] },
-  { type: "wheel", icon: "🔥", name: "베어링 과열", message: "바퀴팀을 부르세요.", complaints: ["타는 냄새가 나요!", "창밖에 연기가 보여요!", "계속 달려도 괜찮나요?"] },
-  { type: "engine", icon: "🛠️", name: "엔진 출력 저하", message: "엔진팀이 필요합니다.", complaints: ["열차가 너무 느려요!", "언제 도착하나요?", "속도가 자꾸 줄어요!"] },
-  { type: "engine", icon: "🌡️", name: "엔진 온도 상승", message: "엔진팀을 호출하세요.", complaints: ["기계 소리가 커졌어요!", "열차가 힘들어 보여요!", "더 가도 괜찮나요?"] },
-  { type: "brake", icon: "🧯", name: "브레이크 압력 저하", message: "브레이크팀이 필요합니다.", complaints: ["브레이크 소리가 커요!", "정차할 때 무서웠어요!", "갑자기 확 멈췄어요!"] },
-  { type: "signal", icon: "🚦", name: "신호기 오류", message: "신호팀이 필요합니다.", complaints: ["왜 계속 기다려요?", "앞에 무슨 일이 있나요?", "신호가 안 바뀌어요!"] },
-  { type: "aircon", icon: "❄️", name: "냉난방 고장", message: "냉난방팀이 필요합니다.", complaints: ["너무 추워요!", "너무 더워요!", "에어컨이 안 나와요!"] },
-  { type: "door", icon: "🚪", name: "출입문 오류", message: "출입문팀이 필요합니다.", complaints: ["문이 안 닫혀요!", "문에서 삐 소리가 나요!", "출발해도 괜찮나요?"] }
+  { type: "electric", icon: "⚡", name: "전기 계통 이상", message: "전기팀이 필요합니다.", visual: ["⚡", "💥", "✨"], complaints: ["불이 깜빡거려요!", "안내 방송이 끊겨요!", "충전기가 안 돼요!"] },
+  { type: "electric", icon: "🔋", name: "배터리 방전", message: "전기팀을 호출하세요.", visual: ["🔋", "⚡", "💥"], complaints: ["열차가 갑자기 멈췄어요!", "불이 꺼졌어요!", "왜 전기가 안 들어와요?"] },
+  { type: "wheel", icon: "🛞", name: "바퀴 이상 진동", message: "바퀴팀이 필요합니다.", visual: ["🛞", "💨", "⚠️"], complaints: ["열차가 덜컹거려요!", "너무 흔들려요!", "소리가 이상해요!"] },
+  { type: "wheel", icon: "🔥", name: "베어링 과열", message: "바퀴팀을 부르세요.", visual: ["🛞", "🔥", "💨"], complaints: ["타는 냄새가 나요!", "창밖에 연기가 보여요!", "계속 달려도 괜찮나요?"] },
+  { type: "engine", icon: "🛠️", name: "엔진 출력 저하", message: "엔진팀이 필요합니다.", visual: ["🛠️", "💨", "⚠️"], complaints: ["열차가 너무 느려요!", "언제 도착하나요?", "속도가 자꾸 줄어요!"] },
+  { type: "engine", icon: "🌡️", name: "엔진 온도 상승", message: "엔진팀을 호출하세요.", visual: ["🌡️", "🔥", "💨"], complaints: ["기계 소리가 커졌어요!", "열차가 힘들어 보여요!", "더 가도 괜찮나요?"] },
+  { type: "brake", icon: "🧯", name: "브레이크 압력 저하", message: "브레이크팀이 필요합니다.", visual: ["🧯", "🔥", "💨"], complaints: ["브레이크 소리가 커요!", "정차할 때 무서웠어요!", "갑자기 확 멈췄어요!"] },
+  { type: "signal", icon: "🚦", name: "신호기 오류", message: "신호팀이 필요합니다.", visual: ["🚦", "🔴", "⚠️"], complaints: ["왜 계속 기다려요?", "앞에 무슨 일이 있나요?", "신호가 안 바뀌어요!"] },
+  { type: "aircon", icon: "❄️", name: "냉난방 고장", message: "냉난방팀이 필요합니다.", visual: ["❄️", "🥶", "💨"], complaints: ["너무 추워요!", "너무 더워요!", "에어컨이 안 나와요!"] },
+  { type: "door", icon: "🚪", name: "출입문 오류", message: "출입문팀이 필요합니다.", visual: ["🚪", "❌", "⚠️"], complaints: ["문이 안 닫혀요!", "문에서 삐 소리가 나요!", "출발해도 괜찮나요?"] }
 ];
 
 function setupAudio() {
   if (!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
   }
-
   if (audioContext.state === "suspended") {
     audioContext.resume();
   }
@@ -74,13 +77,11 @@ function makeClickSound() {
 
   osc.type = "square";
   osc.frequency.setValueAtTime(120, audioContext.currentTime);
-
   gain.gain.setValueAtTime(0.18, audioContext.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.08);
 
   osc.connect(gain);
   gain.connect(audioContext.destination);
-
   osc.start();
   osc.stop(audioContext.currentTime + 0.08);
 }
@@ -94,13 +95,11 @@ function playBrakeSound() {
   osc.type = "sawtooth";
   osc.frequency.setValueAtTime(900, audioContext.currentTime);
   osc.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.7);
-
   gain.gain.setValueAtTime(0.2, audioContext.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.7);
 
   osc.connect(gain);
   gain.connect(audioContext.destination);
-
   osc.start();
   osc.stop(audioContext.currentTime + 0.7);
 }
@@ -114,13 +113,11 @@ function playSuccessSound() {
   osc.type = "sine";
   osc.frequency.setValueAtTime(700, audioContext.currentTime);
   osc.frequency.setValueAtTime(1000, audioContext.currentTime + 0.15);
-
   gain.gain.setValueAtTime(0.18, audioContext.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.35);
 
   osc.connect(gain);
   gain.connect(audioContext.destination);
-
   osc.start();
   osc.stop(audioContext.currentTime + 0.35);
 }
@@ -135,15 +132,27 @@ function playFailureSound() {
   osc.frequency.setValueAtTime(500, audioContext.currentTime);
   osc.frequency.setValueAtTime(300, audioContext.currentTime + 0.12);
   osc.frequency.setValueAtTime(500, audioContext.currentTime + 0.24);
-
   gain.gain.setValueAtTime(0.18, audioContext.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.45);
 
   osc.connect(gain);
   gain.connect(audioContext.destination);
-
   osc.start();
   osc.stop(audioContext.currentTime + 0.45);
+}
+
+function showFailureEffect(failure) {
+  effectIcon1.textContent = failure.visual[0];
+  effectIcon2.textContent = failure.visual[1];
+  effectIcon3.textContent = failure.visual[2];
+
+  failureEffect.classList.remove("hidden");
+  ktxShape.classList.add("shake");
+}
+
+function hideFailureEffect() {
+  failureEffect.classList.add("hidden");
+  ktxShape.classList.remove("shake");
 }
 
 function updateTrainPosition() {
@@ -180,6 +189,8 @@ function startTrain() {
     messageText.textContent = "고장 발생! 먼저 알맞은 정비팀을 부르세요.";
     return;
   }
+
+  hideFailureEffect();
 
   running = true;
   speed = 180;
@@ -247,6 +258,7 @@ function makeFailure() {
 
   stopTrainSound();
   playFailureSound();
+  showFailureEffect(currentFailure);
 
   const randomComplaint =
     currentFailure.complaints[Math.floor(Math.random() * currentFailure.complaints.length)];
@@ -274,6 +286,7 @@ function callMechanic(type) {
     if (happy > 100) happy = 100;
 
     playSuccessSound();
+    hideFailureEffect();
 
     messageText.textContent = "✅ 수리 완료! 다시 출발할 수 있습니다.";
     complaintText.textContent = "승객: 다행이에요! 고마워요!";
@@ -306,6 +319,7 @@ function resetGame() {
   clearInterval(moveTimer);
   clearTimeout(failureTimer);
   stopTrainSound();
+  hideFailureEffect();
 
   messageText.textContent = "대기 중입니다.";
   complaintText.textContent = "아직 컴플레인이 없습니다.";
