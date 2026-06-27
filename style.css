@@ -34,132 +34,18 @@ h1 {
 }
 
 .map {
-  position: relative;
+  width: 100%;
   height: 460px;
-  background: linear-gradient(#9ee082, #5fba5a);
   border-radius: 25px;
   overflow: hidden;
   border: 6px solid #6b9f4a;
+  background: #82cf67;
 }
 
-.rail {
-  position: absolute;
-  left: 130px;
-  top: 55px;
-  width: 700px;
-  height: 330px;
-  border: 26px solid #8b5a2b;
-  border-radius: 50%;
-  box-sizing: border-box;
-  background: transparent;
-}
-
-.rail::before {
-  content: "";
-  position: absolute;
-  left: -14px;
-  top: -14px;
-  width: calc(100% + 28px);
-  height: calc(100% + 28px);
-  border: 6px dashed #e7d6b5;
-  border-radius: 50%;
-}
-
-.rail::after {
-  content: "";
-  position: absolute;
-  left: 18px;
-  top: 18px;
-  width: calc(100% - 36px);
-  height: calc(100% - 36px);
-  border: 8px solid #c9c9c9;
-  border-radius: 50%;
-}
-
-.station {
-  position: absolute;
-  background: #fff8d8;
-  border: 4px solid #174a9c;
-  border-radius: 16px;
-  padding: 10px;
-  font-weight: bold;
-  color: #12356b;
-  box-shadow: 0 4px rgba(0,0,0,0.2);
-}
-
-.station1 {
-  left: 420px;
-  top: 170px;
-  font-size: 24px;
-}
-
-.station2 {
-  left: 95px;
-  top: 205px;
-}
-
-.station3 {
-  right: 85px;
-  top: 205px;
-}
-
-.station4 {
-  left: 425px;
-  bottom: 25px;
-}
-
-.ktx-train {
-  position: absolute;
-  width: 130px;
-  height: 48px;
-  transform-origin: center center;
-  z-index: 5;
-}
-
-.nose {
-  position: absolute;
-  left: 0;
-  top: 8px;
-  width: 45px;
-  height: 32px;
-  background: white;
-  border: 3px solid #174a9c;
-  border-radius: 70% 20% 20% 70%;
-}
-
-.body {
-  position: absolute;
-  left: 36px;
-  top: 4px;
-  width: 90px;
-  height: 40px;
-  background: white;
-  border: 3px solid #174a9c;
-  border-radius: 8px 20px 20px 8px;
-  color: #174a9c;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 18px;
-  padding-top: 2px;
-}
-
-.body::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  top: 7px;
-  width: 65px;
-  height: 7px;
-  background: #1e73d8;
-  border-radius: 10px;
-}
-
-.body::after {
-  content: "🚄";
-  position: absolute;
-  right: -20px;
-  top: 6px;
-  font-size: 22px;
+.world {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .message-box {
@@ -226,4 +112,19 @@ button:active {
   background: #7b61ff;
   box-shadow: 0 4px #5037c9;
   margin-top: 18px;
+}
+
+@media (max-width: 700px) {
+  .top-info {
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 16px;
+  }
+
+  .map {
+    height: 330px;
+  }
+
+  button {
+    font-size: 16px;
+  }
 }
