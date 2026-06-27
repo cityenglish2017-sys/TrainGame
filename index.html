@@ -20,20 +20,16 @@
       <svg class="world" viewBox="0 0 900 430">
         <rect width="900" height="430" rx="24" fill="#82cf67"/>
 
-        <!-- grass details -->
         <circle cx="90" cy="70" r="28" fill="#4fae4f"/>
         <circle cx="760" cy="70" r="34" fill="#4fae4f"/>
         <circle cx="120" cy="350" r="34" fill="#4fae4f"/>
         <circle cx="770" cy="340" r="38" fill="#4fae4f"/>
-        <circle cx="450" cy="60" r="24" fill="#4fae4f"/>
 
-        <!-- outer rail -->
         <ellipse cx="450" cy="220" rx="340" ry="150" fill="none" stroke="#6b4325" stroke-width="34"/>
         <ellipse cx="450" cy="220" rx="340" ry="150" fill="none" stroke="#d9c7a2" stroke-width="22"/>
         <ellipse cx="450" cy="220" rx="340" ry="150" fill="none" stroke="#777" stroke-width="6"/>
         <ellipse cx="450" cy="220" rx="300" ry="118" fill="none" stroke="#777" stroke-width="6"/>
 
-        <!-- sleepers -->
         <g stroke="#8b5a2b" stroke-width="5">
           <line x1="450" y1="45" x2="450" y2="88"/>
           <line x1="590" y1="65" x2="570" y2="105"/>
@@ -49,32 +45,24 @@
           <line x1="310" y1="65" x2="330" y2="105"/>
         </g>
 
-        <!-- center station -->
         <g>
           <rect x="355" y="145" width="190" height="120" rx="10" fill="#fff5cf" stroke="#174a9c" stroke-width="5"/>
           <polygon points="340,145 450,85 560,145" fill="#2f80ed" stroke="#174a9c" stroke-width="5"/>
           <rect x="415" y="205" width="70" height="60" fill="#7ec8ff" stroke="#174a9c" stroke-width="4"/>
-          <circle cx="450" cy="135" r="18" fill="white" stroke="#174a9c" stroke-width="4"/>
           <text x="450" y="185" text-anchor="middle" font-size="28" font-weight="bold" fill="#174a9c">서울역</text>
         </g>
 
-        <!-- small stations -->
         <g font-size="18" font-weight="bold" text-anchor="middle">
-          <g>
-            <rect x="65" y="190" width="95" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
-            <text x="112" y="225" fill="#174a9c">대전역</text>
-          </g>
-          <g>
-            <rect x="740" y="190" width="95" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
-            <text x="787" y="225" fill="#174a9c">부산역</text>
-          </g>
-          <g>
-            <rect x="400" y="355" width="100" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
-            <text x="450" y="390" fill="#174a9c">동대구역</text>
-          </g>
+          <rect x="65" y="190" width="95" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
+          <text x="112" y="225" fill="#174a9c">대전역</text>
+
+          <rect x="740" y="190" width="95" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
+          <text x="787" y="225" fill="#174a9c">부산역</text>
+
+          <rect x="400" y="355" width="100" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
+          <text x="450" y="390" fill="#174a9c">동대구역</text>
         </g>
 
-        <!-- train -->
         <g id="trainSvg">
           <g id="ktxShape">
             <path d="M -65 -18 L 35 -18 Q 70 -18 78 0 Q 70 18 35 18 L -65 18 Q -85 18 -92 0 Q -85 -18 -65 -18 Z"
@@ -86,6 +74,13 @@
             <rect x="-15" y="5" width="20" height="7" rx="3" fill="#444"/>
             <rect x="12" y="5" width="20" height="7" rx="3" fill="#444"/>
             <text x="-35" y="4" font-size="16" font-weight="bold" fill="#174a9c">KTX</text>
+          </g>
+
+          <!-- 고장 시각 효과 -->
+          <g id="failureEffect" class="effect hidden">
+            <text id="effectIcon1" x="0" y="-45" font-size="34" text-anchor="middle">⚡</text>
+            <text id="effectIcon2" x="25" y="-28" font-size="28" text-anchor="middle">💥</text>
+            <text id="effectIcon3" x="-25" y="-25" font-size="26" text-anchor="middle">💨</text>
           </g>
         </g>
       </svg>
