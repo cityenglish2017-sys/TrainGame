@@ -48,6 +48,37 @@ h1 {
   display: block;
 }
 
+.effect {
+  animation: popEffect 0.45s infinite alternate;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes popEffect {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-8px) scale(1.18);
+    opacity: 1;
+  }
+}
+
+#ktxShape.shake {
+  animation: trainShake 0.12s infinite;
+}
+
+@keyframes trainShake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(2px, -1px); }
+  50% { transform: translate(-2px, 1px); }
+  75% { transform: translate(1px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+
 .message-box {
   display: flex;
   align-items: center;
