@@ -1,88 +1,3 @@
-let audioContext = null;
-let trainSoundTimer = null;
-
-function startTrainSound() {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
-  stopTrainSound();
-
-  trainSoundTimer = setInterval(() => {
-    makeClickSound();
-    setTimeout(makeClickSound, 120);
-  }, 450);
-}
-
-function stopTrainSound() {
-  if (trainSoundTimer) {
-    clearInterval(trainSoundTimer);
-    trainSoundTimer = null;
-  }
-}
-
-function makeClickSound() {
-  if (!audioContext) return;
-
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-
-  oscillator.type = "square";
-  oscillator.frequency.setValueAtTime(160, audioContext.currentTime);
-
-  gain.gain.setValueAtTime(0.08, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.08);
-
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + 0.08);
-}
-
-function playBrakeSound() {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-
-  oscillator.type = "sawtooth";
-  oscillator.frequency.setValueAtTime(700, audioContext.currentTime);
-  oscillator.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.6);
-
-  gain.gain.setValueAtTime(0.12, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.6);
-
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + 0.6);
-}
-
-function playSuccessSound() {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-
-  oscillator.type = "sine";
-  oscillator.frequency.setValueAtTime(700, audioContext.currentTime);
-  oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.15);
-
-  gain.gain.setValueAtTime(0.1, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.35);
-
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + 0.35);
-}
 let speed = 0;
 let happy = 100;
 let score = 0;
@@ -92,6 +7,10 @@ let moveTimer = null;
 let failureTimer = null;
 let failureCount = 0;
 let angle = 210;
+
+// 소리 관련
+let audioContext = null;
+let trainSoundTimer = null;
 
 const speedText = document.getElementById("speed");
 const happyText = document.getElementById("happy");
@@ -120,6 +39,113 @@ const failures = [
   { type: "door", icon: "🚪", name: "출입문 오류", message: "출입문팀이 필요합니다.", complaints: ["문이 안 닫혀요!", "문에서 삐 소리가 나요!", "출발해도 괜찮나요?"] }
 ];
 
+function setupAudio() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
+}
+
+function startTrainSound() {
+  setupAudio();
+  stopTrainSound();
+
+  trainSoundTimer = setInterval(() => {
+    makeClickSound();
+    setTimeout(makeClickSound, 120);
+  }, 420);
+}
+
+function stopTrainSound() {
+  if (trainSoundTimer) {
+    clearInterval(trainSoundTimer);
+    trainSoundTimer = null;
+  }
+}
+
+function makeClickSound() {
+  if (!audioContext) return;
+
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  osc.type = "square";
+  osc.frequency.setValueAtTime(120, audioContext.currentTime);
+
+  gain.gain.setValueAtTime(0.18, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.08);
+
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+
+  osc.start();
+  osc.stop(audioContext.currentTime + 0.08);
+}
+
+function playBrakeSound() {
+  setupAudio();
+
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  osc.type = "sawtooth";
+  osc.frequency.setValueAtTime(900, audioContext.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.7);
+
+  gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.7);
+
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+
+  osc.start();
+  osc.stop(audioContext.currentTime + 0.7);
+}
+
+function playSuccessSound() {
+  setupAudio();
+
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(700, audioContext.currentTime);
+  osc.frequency.setValueAtTime(1000, audioContext.currentTime + 0.15);
+
+  gain.gain.setValueAtTime(0.18, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.35);
+
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+
+  osc.start();
+  osc.stop(audioContext.currentTime + 0.35);
+}
+
+function playFailureSound() {
+  setupAudio();
+
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  osc.type = "square";
+  osc.frequency.setValueAtTime(500, audioContext.currentTime);
+  osc.frequency.setValueAtTime(300, audioContext.currentTime + 0.12);
+  osc.frequency.setValueAtTime(500, audioContext.currentTime + 0.24);
+
+  gain.gain.setValueAtTime(0.18, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.45);
+
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+
+  osc.start();
+  osc.stop(audioContext.currentTime + 0.45);
+}
+
 function updateTrainPosition() {
   const rad = angle * Math.PI / 180;
   const x = centerX + radiusX * Math.cos(rad);
@@ -143,6 +169,8 @@ function updateScreen() {
 }
 
 function startTrain() {
+  setupAudio();
+
   if (happy <= 0) {
     messageText.textContent = "게임이 끝났습니다. 다시 시작을 눌러주세요.";
     return;
@@ -158,6 +186,8 @@ function startTrain() {
   messageText.textContent = "KTX 산천이 운행 중입니다.";
   complaintText.textContent = "승객들이 편안하게 이동 중입니다.";
   failureIcon.textContent = "🚄";
+
+  startTrainSound();
 
   clearInterval(moveTimer);
   moveTimer = setInterval(() => {
@@ -180,6 +210,8 @@ function startTrain() {
 function stopTrain() {
   running = false;
   speed = 0;
+  stopTrainSound();
+
   messageText.textContent = "열차가 정지했습니다.";
   failureIcon.textContent = "⏹️";
   updateScreen();
@@ -190,6 +222,10 @@ function emergencyBrake() {
   speed = 0;
   happy -= 5;
   if (happy < 0) happy = 0;
+
+  stopTrainSound();
+  playBrakeSound();
+
   messageText.textContent = "비상제동을 사용했습니다!";
   complaintText.textContent = "승객: 갑자기 멈춰서 놀랐어요!";
   failureIcon.textContent = "🚨";
@@ -209,6 +245,9 @@ function makeFailure() {
   speed = 0;
   failureCount += 1;
 
+  stopTrainSound();
+  playFailureSound();
+
   const randomComplaint =
     currentFailure.complaints[Math.floor(Math.random() * currentFailure.complaints.length)];
 
@@ -220,6 +259,8 @@ function makeFailure() {
 }
 
 function callMechanic(type) {
+  setupAudio();
+
   if (currentFailure === null) {
     messageText.textContent = "현재 고장이 없습니다.";
     complaintText.textContent = "승객: 지금은 괜찮아요!";
@@ -232,6 +273,8 @@ function callMechanic(type) {
     happy += 10;
     if (happy > 100) happy = 100;
 
+    playSuccessSound();
+
     messageText.textContent = "✅ 수리 완료! 다시 출발할 수 있습니다.";
     complaintText.textContent = "승객: 다행이에요! 고마워요!";
     failureIcon.textContent = "😊";
@@ -240,6 +283,8 @@ function callMechanic(type) {
   } else {
     happy -= 20;
     if (happy < 0) happy = 0;
+
+    playFailureSound();
 
     messageText.textContent = "❌ 잘못된 정비팀입니다!";
     complaintText.textContent = "승객: 아직 문제가 해결되지 않았어요!";
@@ -260,6 +305,7 @@ function resetGame() {
 
   clearInterval(moveTimer);
   clearTimeout(failureTimer);
+  stopTrainSound();
 
   messageText.textContent = "대기 중입니다.";
   complaintText.textContent = "아직 컴플레인이 없습니다.";
