@@ -2,23 +2,32 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>Train Trouble 2</title>
+  <title>KTX 산천 기관사 게임</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="game">
-    <h1>🚆 Train Trouble 2</h1>
-    <p>기관사가 되어 고장을 판단하고 알맞은 정비팀을 부르세요!</p>
+    <h1>🚄 KTX 산천 기관사 게임</h1>
 
-    <div class="track">
-      <div id="train">🚆</div>
+    <div class="top-info">
+      <div>🚄 속도 <span id="speed">0</span> km/h</div>
+      <div>😊 만족도 <span id="happy">100</span>%</div>
+      <div>⭐ 점수 <span id="score">0</span></div>
+      <div>🔧 고장 <span id="failureCount">0</span>건</div>
     </div>
 
-    <div class="dashboard">
-      <div>🚄 속도: <span id="speed">0</span> km/h</div>
-      <div>😊 승객 만족도: <span id="happy">100</span>%</div>
-      <div>⭐ 점수: <span id="score">0</span></div>
-      <div>🔧 고장 건수: <span id="failureCount">0</span></div>
+    <div class="map">
+      <div class="rail"></div>
+
+      <div class="station station1">🏢<br>서울역</div>
+      <div class="station station2">🏫<br>대전역</div>
+      <div class="station station3">🏬<br>동대구역</div>
+      <div class="station station4">🏙️<br>부산역</div>
+
+      <div id="train" class="ktx-train">
+        <div class="nose"></div>
+        <div class="body">KTX<br>산천</div>
+      </div>
     </div>
 
     <div class="message-box">
