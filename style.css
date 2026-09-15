@@ -1366,3 +1366,658 @@ and
   }
 
 }
+/* =========================================================
+   iPad Air 가로모드 전용 화면 최적화
+   ★ style.css 가장 마지막에 붙여주세요
+   ========================================================= */
+
+@media
+(orientation: landscape)
+and (max-height: 900px) {
+
+  /* =========================
+     전체 화면
+     ========================= */
+
+  .game {
+    height: 100dvh;
+    min-height: 100dvh;
+
+    padding:
+      3px
+      max(8px, env(safe-area-inset-right))
+      4px
+      max(8px, env(safe-area-inset-left));
+
+    overflow: hidden;
+  }
+
+
+  /* =========================
+     상단 제목
+     ========================= */
+
+  .topbar {
+    height: 34px;
+    min-height: 34px;
+  }
+
+  .small-title {
+    display: none;
+  }
+
+  h1 {
+    margin: 0;
+
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .top-status {
+    gap: 5px;
+  }
+
+  .status-box {
+    min-width: 54px;
+
+    padding: 3px 7px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    box-shadow:
+      0 2px 6px
+      rgba(33,75,115,.10);
+  }
+
+
+  /* =========================
+     미션창 높이 축소
+     ========================= */
+
+  .mission-panel {
+    min-height: 49px;
+    height: 49px;
+
+    gap: 7px;
+
+    padding: 4px 9px;
+
+    border-radius: 12px;
+  }
+
+  .mission-icon {
+    font-size: 23px;
+  }
+
+  .mission-label {
+    font-size: 8px;
+  }
+
+  .mission-text {
+    margin-top: 0;
+
+    font-size: 12px;
+    line-height: 1.15;
+  }
+
+  .new-mission-btn {
+    min-width: 88px;
+    min-height: 33px;
+    height: 33px;
+
+    padding: 0 8px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+
+    box-shadow:
+      0 2px 0
+      #1d4d8b;
+  }
+
+
+  /* =========================
+     차량기지
+     ========================= */
+
+  .depot {
+    margin-top: 4px;
+
+    border-width: 2px;
+    border-radius: 16px;
+  }
+
+
+  /* 위쪽 안내문 */
+
+  .instruction {
+    top: 5px;
+
+    padding: 4px 11px;
+
+    font-size: 10px;
+  }
+
+
+  /* =========================
+     배경 건물 축소
+     ========================= */
+
+  .depot-building {
+    right: 2%;
+    top: 7%;
+
+    width: 150px;
+    height: 69px;
+
+    padding-top: 9px;
+
+    border-width: 3px;
+
+    font-size: 10px;
+  }
+
+  .tower {
+    left: 3%;
+    top: 7%;
+
+    font-size: 38px;
+  }
+
+  .signal {
+    left: 13%;
+    top: 17%;
+
+    font-size: 29px;
+  }
+
+  .worker {
+    top: 25%;
+
+    font-size: 23px;
+  }
+
+
+  /* =========================
+     열차
+     ========================= */
+
+  .train {
+    top: 43%;
+
+    width: 97%;
+
+    transform:
+      translate(-50%, -50%)
+      scale(.92);
+
+    transform-origin: center center;
+  }
+
+  .train-car {
+    height: 63px;
+
+    border-width: 2px;
+  }
+
+  .engine {
+    width: 125px;
+
+    border-radius:
+      40px 5px 3px 3px;
+  }
+
+  .passenger {
+    width: 102px;
+  }
+
+
+  /* 객차 이름 */
+
+  .car-label {
+    top: -20px;
+
+    min-width: 50px;
+
+    padding: 2px 5px;
+
+    border-radius: 6px;
+
+    font-size: 8px;
+  }
+
+
+  /* 기관차 */
+
+  .engine-window {
+    left: 27px;
+    top: 11px;
+
+    width: 34px;
+    height: 15px;
+
+    border-width: 2px;
+  }
+
+  .headlight {
+    left: 9px;
+    bottom: 16px;
+
+    width: 8px;
+    height: 8px;
+  }
+
+  .ktx-logo {
+    right: 11px;
+    bottom: 17px;
+
+    font-size: 12px;
+  }
+
+
+  /* 객차 창문 */
+
+  .windows {
+    left: 8px;
+    right: 8px;
+    top: 13px;
+  }
+
+  .windows span {
+    width: 18px;
+    height: 12px;
+
+    border-width: 1.5px;
+
+    border-radius: 3px;
+  }
+
+
+  /* 바퀴 */
+
+  .wheel-row {
+    left: 16%;
+    right: 16%;
+
+    bottom: -9px;
+
+    font-size: 16px;
+  }
+
+
+  /* =========================
+     연결기
+     ========================= */
+
+  .coupler {
+    width: 29px;
+    height: 45px;
+
+    margin-bottom: 7px;
+  }
+
+  .coupler span {
+    font-size: 22px;
+  }
+
+  .coupler small {
+    min-width: 17px;
+
+    margin-top: 0;
+
+    padding: 1px 2px;
+
+    font-size: 7px;
+  }
+
+
+  /* =========================
+     선로
+     ========================= */
+
+  .track {
+    top: 58%;
+
+    height: 49px;
+
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 26px,
+        #6f5743 26px 34px,
+        transparent 34px 57px
+      );
+  }
+
+  .rail {
+    height: 4px;
+  }
+
+  .rail1 {
+    top: 12px;
+  }
+
+  .rail2 {
+    bottom: 12px;
+  }
+
+
+  /* =========================
+     정비고
+     ========================= */
+
+  .repair-garage {
+    right: 2%;
+    bottom: 3%;
+
+    width: 105px;
+    height: 61px;
+
+    padding: 4px;
+
+    border-width: 3px;
+
+    border-radius: 6px;
+  }
+
+  .garage-title {
+    font-size: 8px;
+  }
+
+  .garage-door {
+    margin-top: 1px;
+
+    font-size: 32px;
+  }
+
+
+  /* =========================
+     하단 메시지
+     ========================= */
+
+  .depot-message {
+    left: 50%;
+    bottom: 3%;
+
+    min-width: 260px;
+    max-width: 55%;
+
+    padding: 6px 10px;
+
+    border-radius: 9px;
+
+    font-size: 10px;
+  }
+
+
+  /* =========================
+     팝업 전체 크기 축소
+     ========================= */
+
+  .modal {
+    padding: 7px;
+  }
+
+  .modal-card {
+    width:
+      min(620px, 91vw);
+
+    max-height: 94dvh;
+
+    padding: 12px;
+
+    border-radius: 18px;
+
+    overflow-y: auto;
+  }
+
+
+  /* =========================
+     연결기 확대화면
+     ========================= */
+
+  .coupler-card h2 {
+    margin: 1px 0 4px;
+
+    font-size: 17px;
+  }
+
+  .coupler-scene {
+    height: 102px;
+
+    padding: 6px;
+
+    border-radius: 12px;
+  }
+
+  .mini-car {
+    width: 180px;
+    height: 58px;
+
+    border-width: 3px;
+  }
+
+  .mini-window {
+    top: 10px;
+
+    width: 52px;
+    height: 16px;
+
+    border-width: 2px;
+  }
+
+  .mini-name {
+    bottom: 5px;
+
+    font-size: 9px;
+  }
+
+  .big-coupler {
+    width: 57px;
+
+    font-size: 35px;
+  }
+
+  .coupler-status {
+    margin: 4px 0;
+
+    padding: 4px;
+
+    font-size: 11px;
+  }
+
+
+  /* =========================
+     연결기 미니게임
+     ========================= */
+
+  .mini-game-area {
+    min-height: 108px;
+
+    padding: 7px;
+
+    border-radius: 11px;
+  }
+
+  .mini-title {
+    margin-bottom: 5px;
+
+    font-size: 13px;
+  }
+
+  .mini-buttons {
+    gap: 5px;
+  }
+
+  .mini-btn {
+    min-height: 42px;
+
+    padding: 4px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+  }
+
+  .pressure-gauge {
+    margin: 5px 0;
+
+    gap: 3px;
+  }
+
+  .pressure-cell {
+    height: 23px;
+  }
+
+  .pressure-marker {
+    font-size: 20px;
+  }
+
+  .action-btn {
+    min-height: 36px;
+
+    font-size: 11px;
+  }
+
+  .separate-btn {
+    min-height: 39px;
+
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    box-shadow:
+      0 2px 0
+      #b66b15;
+  }
+
+
+  /* =========================
+     화용언어 팝업
+     ========================= */
+
+  .talk-type {
+    padding: 3px 7px;
+
+    font-size: 8px;
+  }
+
+  .talk-character {
+    margin-top: 4px;
+
+    font-size: 11px;
+  }
+
+  .talk-icon {
+    margin-top: 1px;
+
+    font-size: 25px;
+  }
+
+  .talk-card h2 {
+    margin: 1px 0 3px;
+
+    font-size: 17px;
+  }
+
+  #talkQuestion {
+    margin: 4px 0 7px;
+
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .talk-choices {
+    gap: 5px;
+  }
+
+  .talk-choice {
+    min-height: 41px;
+
+    padding: 5px;
+
+    border-radius: 9px;
+
+    font-size: 10px;
+  }
+
+  .talk-feedback {
+    margin-top: 5px;
+
+    padding: 5px;
+
+    font-size: 10px;
+  }
+
+  .speak-area {
+    margin-top: 5px;
+
+    padding: 6px;
+
+    border-radius: 9px;
+  }
+
+  .speak-label {
+    font-size: 8px;
+  }
+
+  .speak-text {
+    margin: 3px 0 5px;
+
+    font-size: 11px;
+  }
+
+  .speak-done-btn {
+    min-height: 34px;
+
+    font-size: 11px;
+  }
+
+
+  /* =========================
+     성공창
+     ========================= */
+
+  .success-card {
+    width:
+      min(410px, 86vw);
+  }
+
+  .success-big {
+    font-size: 42px;
+  }
+
+  .success-card h2 {
+    font-size: 20px;
+  }
+
+  .success-car-text {
+    margin: 4px;
+
+    padding: 4px 13px;
+
+    font-size: 16px;
+  }
+
+  .success-card p {
+    margin: 5px 0;
+
+    font-size: 11px;
+  }
+
+  .repair-animation {
+    margin: 7px 0;
+
+    font-size: 25px;
+  }
+
+  .finish-btn {
+    min-height: 39px;
+
+    font-size: 12px;
+  }
+
+}
