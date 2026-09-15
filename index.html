@@ -1,122 +1,616 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>KTX 산천 기관사 게임</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0,
+    maximum-scale=1.0, user-scalable=no"
+  >
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <title>KTX-산천 분리정비소</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="game">
-    <h1>🚄 KTX 산천 기관사 게임</h1>
 
-    <div class="top-info">
-      <div>🚄 속도 <span id="speed">0</span> km/h</div>
-      <div>😊 만족도 <span id="happy">100</span>%</div>
-      <div>⭐ 점수 <span id="score">0</span></div>
-      <div>🔧 고장 <span id="failureCount">0</span>건</div>
+<main class="game">
+
+  <!-- 상단 -->
+  <header class="topbar">
+
+    <div>
+      <div class="small-title">
+        AJUN TRAIN DEPOT
+      </div>
+
+      <h1>
+        🚄 KTX-산천 분리정비소
+      </h1>
     </div>
 
-    <div class="map">
-      <svg class="world" viewBox="0 0 900 430">
-        <rect width="900" height="430" rx="24" fill="#82cf67"/>
+    <div class="top-status">
 
-        <circle cx="90" cy="70" r="28" fill="#4fae4f"/>
-        <circle cx="760" cy="70" r="34" fill="#4fae4f"/>
-        <circle cx="120" cy="350" r="34" fill="#4fae4f"/>
-        <circle cx="770" cy="340" r="38" fill="#4fae4f"/>
+      <div class="status-box">
+        ⭐
+        <strong id="scoreText">0</strong>
+      </div>
 
-        <ellipse cx="450" cy="220" rx="340" ry="150" fill="none" stroke="#6b4325" stroke-width="34"/>
-        <ellipse cx="450" cy="220" rx="340" ry="150" fill="none" stroke="#d9c7a2" stroke-width="22"/>
-        <ellipse cx="450" cy="220" rx="340" ry="150" fill="none" stroke="#777" stroke-width="6"/>
-        <ellipse cx="450" cy="220" rx="300" ry="118" fill="none" stroke="#777" stroke-width="6"/>
+      <div class="status-box">
+        🔧
+        <strong id="repairText">0</strong>
+      </div>
 
-        <g stroke="#8b5a2b" stroke-width="5">
-          <line x1="450" y1="45" x2="450" y2="88"/>
-          <line x1="590" y1="65" x2="570" y2="105"/>
-          <line x1="710" y1="120" x2="670" y2="145"/>
-          <line x1="775" y1="220" x2="725" y2="220"/>
-          <line x1="710" y1="320" x2="670" y2="295"/>
-          <line x1="590" y1="375" x2="570" y2="335"/>
-          <line x1="450" y1="395" x2="450" y2="352"/>
-          <line x1="310" y1="375" x2="330" y2="335"/>
-          <line x1="190" y1="320" x2="230" y2="295"/>
-          <line x1="125" y1="220" x2="175" y2="220"/>
-          <line x1="190" y1="120" x2="230" y2="145"/>
-          <line x1="310" y1="65" x2="330" y2="105"/>
-        </g>
-
-        <g>
-          <rect x="355" y="145" width="190" height="120" rx="10" fill="#fff5cf" stroke="#174a9c" stroke-width="5"/>
-          <polygon points="340,145 450,85 560,145" fill="#2f80ed" stroke="#174a9c" stroke-width="5"/>
-          <rect x="415" y="205" width="70" height="60" fill="#7ec8ff" stroke="#174a9c" stroke-width="4"/>
-          <text x="450" y="185" text-anchor="middle" font-size="28" font-weight="bold" fill="#174a9c">서울역</text>
-        </g>
-
-        <g font-size="18" font-weight="bold" text-anchor="middle">
-          <rect x="65" y="190" width="95" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
-          <text x="112" y="225" fill="#174a9c">대전역</text>
-
-          <rect x="740" y="190" width="95" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
-          <text x="787" y="225" fill="#174a9c">부산역</text>
-
-          <rect x="400" y="355" width="100" height="58" rx="10" fill="#fff8df" stroke="#174a9c" stroke-width="4"/>
-          <text x="450" y="390" fill="#174a9c">동대구역</text>
-        </g>
-
-        <g id="trainSvg">
-          <g id="ktxShape">
-            <path d="M -65 -18 L 35 -18 Q 70 -18 78 0 Q 70 18 35 18 L -65 18 Q -85 18 -92 0 Q -85 -18 -65 -18 Z"
-              fill="white" stroke="#174a9c" stroke-width="4"/>
-            <path d="M -70 -12 L 25 -12 Q 55 -12 67 0 Q 55 12 25 12 L -70 12 Z"
-              fill="#eaf6ff"/>
-            <rect x="-45" y="-15" width="65" height="8" rx="4" fill="#1f70d1"/>
-            <rect x="-42" y="5" width="20" height="7" rx="3" fill="#444"/>
-            <rect x="-15" y="5" width="20" height="7" rx="3" fill="#444"/>
-            <rect x="12" y="5" width="20" height="7" rx="3" fill="#444"/>
-            <text x="-35" y="4" font-size="16" font-weight="bold" fill="#174a9c">KTX</text>
-          </g>
-
-          <!-- 고장 시각 효과 -->
-          <g id="failureEffect" class="effect hidden">
-            <text id="effectIcon1" x="0" y="-45" font-size="34" text-anchor="middle">⚡</text>
-            <text id="effectIcon2" x="25" y="-28" font-size="28" text-anchor="middle">💥</text>
-            <text id="effectIcon3" x="-25" y="-25" font-size="26" text-anchor="middle">💨</text>
-          </g>
-        </g>
-      </svg>
     </div>
 
-    <div class="message-box">
-      <div id="failureIcon">✅</div>
-      <div id="message">대기 중입니다.</div>
+  </header>
+
+
+  <!-- 미션 -->
+  <section class="mission-panel">
+
+    <div class="mission-icon">
+      📋
     </div>
 
-    <div class="complaint-box">
-      <div>🗣️ 손님 컴플레인</div>
-      <div id="complaint">아직 컴플레인이 없습니다.</div>
+    <div class="mission-info">
+
+      <div class="mission-label">
+        오늘의 정비 지시
+      </div>
+
+      <div
+        id="missionText"
+        class="mission-text"
+      >
+        정비 지시를 기다리는 중...
+      </div>
+
     </div>
 
-    <div class="controls">
-      <button onclick="startTrain()">▶️ 출발</button>
-      <button onclick="stopTrain()">⏹️ 정지</button>
-      <button onclick="emergencyBrake()">🚨 비상제동</button>
+    <button
+      id="newMissionBtn"
+      class="new-mission-btn"
+      type="button"
+    >
+      🎲 새 임무
+    </button>
+
+  </section>
+
+
+  <!-- 차량기지 -->
+  <section class="depot">
+
+    <!-- 배경 -->
+
+    <div class="depot-background">
+
+      <div class="depot-building">
+        🏭 KTX 정비고
+      </div>
+
+      <div class="tower">
+        🗼
+      </div>
+
+      <div class="signal">
+        🚦
+      </div>
+
+      <div class="worker worker1">
+        👷
+      </div>
+
+      <div class="worker worker2">
+        👷‍♀️
+      </div>
+
     </div>
 
-    <h3>정비팀 호출</h3>
 
-    <div class="mechanics">
-      <button onclick="callMechanic('electric')">⚡<br>전기팀</button>
-      <button onclick="callMechanic('wheel')">🛞<br>바퀴팀</button>
-      <button onclick="callMechanic('engine')">🛠️<br>엔진팀</button>
-      <button onclick="callMechanic('brake')">🧯<br>브레이크팀</button>
-      <button onclick="callMechanic('signal')">🚦<br>신호팀</button>
-      <button onclick="callMechanic('aircon')">❄️<br>냉난방팀</button>
-      <button onclick="callMechanic('door')">🚪<br>출입문팀</button>
+    <div class="instruction">
+      👇 분리할 차량 사이의 <b>연결기</b>를 눌러주세요!
     </div>
 
-    <button class="reset" onclick="resetGame()">🔄 다시 시작</button>
+
+    <!-- 열차 전체 -->
+
+    <div
+      id="train"
+      class="train"
+    >
+
+      <!-- 기관차 -->
+
+      <div
+        class="train-car engine"
+        data-car="0"
+      >
+
+        <div class="car-label">
+          기관차
+        </div>
+
+        <div class="engine-window"></div>
+
+        <div class="headlight"></div>
+
+        <div class="ktx-logo">
+          KTX
+        </div>
+
+        <div class="wheel-row">
+          <span>●</span>
+          <span>●</span>
+        </div>
+
+      </div>
+
+
+      <!-- 연결기 A -->
+
+      <button
+        class="coupler"
+        data-coupler="0"
+        type="button"
+      >
+        <span>🔗</span>
+        <small>A</small>
+      </button>
+
+
+      <!-- 1호차 -->
+
+      <div
+        class="train-car passenger"
+        data-car="1"
+      >
+
+        <div class="car-label">
+          1호차
+        </div>
+
+        <div class="windows">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="wheel-row">
+          <span>●</span>
+          <span>●</span>
+        </div>
+
+      </div>
+
+
+      <!-- 연결기 B -->
+
+      <button
+        class="coupler"
+        data-coupler="1"
+        type="button"
+      >
+        <span>🔗</span>
+        <small>B</small>
+      </button>
+
+
+      <!-- 2호차 -->
+
+      <div
+        class="train-car passenger"
+        data-car="2"
+      >
+
+        <div class="car-label">
+          2호차
+        </div>
+
+        <div class="windows">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="wheel-row">
+          <span>●</span>
+          <span>●</span>
+        </div>
+
+      </div>
+
+
+      <!-- 연결기 C -->
+
+      <button
+        class="coupler"
+        data-coupler="2"
+        type="button"
+      >
+        <span>🔗</span>
+        <small>C</small>
+      </button>
+
+
+      <!-- 3호차 -->
+
+      <div
+        class="train-car passenger"
+        data-car="3"
+      >
+
+        <div class="car-label">
+          3호차
+        </div>
+
+        <div class="windows">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="wheel-row">
+          <span>●</span>
+          <span>●</span>
+        </div>
+
+      </div>
+
+
+      <!-- 연결기 D -->
+
+      <button
+        class="coupler"
+        data-coupler="3"
+        type="button"
+      >
+        <span>🔗</span>
+        <small>D</small>
+      </button>
+
+
+      <!-- 4호차 -->
+
+      <div
+        class="train-car passenger"
+        data-car="4"
+      >
+
+        <div class="car-label">
+          4호차
+        </div>
+
+        <div class="windows">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="wheel-row">
+          <span>●</span>
+          <span>●</span>
+        </div>
+
+      </div>
+
+
+      <!-- 연결기 E -->
+
+      <button
+        class="coupler"
+        data-coupler="4"
+        type="button"
+      >
+        <span>🔗</span>
+        <small>E</small>
+      </button>
+
+
+      <!-- 5호차 -->
+
+      <div
+        class="train-car passenger"
+        data-car="5"
+      >
+
+        <div class="car-label">
+          5호차
+        </div>
+
+        <div class="windows">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="wheel-row">
+          <span>●</span>
+          <span>●</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 선로 -->
+
+    <div class="track">
+
+      <div class="rail rail1"></div>
+      <div class="rail rail2"></div>
+
+    </div>
+
+
+    <!-- 정비고 -->
+
+    <div
+      id="repairGarage"
+      class="repair-garage"
+    >
+
+      <div class="garage-title">
+        🔧 정비고
+      </div>
+
+      <div class="garage-door">
+        🚪
+      </div>
+
+    </div>
+
+
+    <!-- 상태 -->
+
+    <div
+      id="depotMessage"
+      class="depot-message"
+    >
+      📋 새 임무 버튼을 눌러주세요.
+    </div>
+
+  </section>
+
+</main>
+
+
+
+<!-- ================================================= -->
+<!-- 연결기 확대 -->
+<!-- ================================================= -->
+
+<div
+  id="couplerModal"
+  class="modal hidden"
+>
+
+  <div class="modal-card coupler-card">
+
+    <div class="modal-top">
+
+      <div>
+        🔎 연결부 확대
+      </div>
+
+      <button
+        id="closeCouplerBtn"
+        class="close-btn"
+        type="button"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <h2 id="couplerTitle">
+      2호차 ↔ 3호차
+    </h2>
+
+
+    <!-- 확대 차량 -->
+
+    <div class="coupler-scene">
+
+      <div class="mini-car left-car">
+
+        <div class="mini-window"></div>
+
+        <div
+          id="leftCarName"
+          class="mini-name"
+        >
+          2호차
+        </div>
+
+      </div>
+
+
+      <div
+        id="bigCoupler"
+        class="big-coupler"
+      >
+        🔗
+      </div>
+
+
+      <div class="mini-car right-car">
+
+        <div class="mini-window"></div>
+
+        <div
+          id="rightCarName"
+          class="mini-name"
+        >
+          3호차
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="couplerStatus"
+      class="coupler-status"
+    >
+      🟢 연결 상태
+    </div>
+
+
+    <!-- 미니게임 영역 -->
+
+    <div
+      id="miniGameArea"
+      class="mini-game-area"
+    >
+    </div>
+
+
   </div>
 
-  <script src="script.js"></script>
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- 화용언어 -->
+<!-- ================================================= -->
+
+<div
+  id="talkModal"
+  class="modal hidden"
+>
+
+  <div class="modal-card talk-card">
+
+    <div class="talk-type">
+      🎙️ 정비팀 무전
+    </div>
+
+    <div
+      id="talkCharacter"
+      class="talk-character"
+    >
+      👨 아빠 정비사
+    </div>
+
+    <div
+      id="talkIcon"
+      class="talk-icon"
+    >
+      📡
+    </div>
+
+    <h2 id="talkTitle">
+      정비팀의 질문
+    </h2>
+
+    <p id="talkQuestion">
+    </p>
+
+    <div
+      id="talkChoices"
+      class="talk-choices"
+    >
+    </div>
+
+    <div
+      id="talkFeedback"
+      class="talk-feedback hidden"
+    >
+    </div>
+
+    <div
+      id="speakArea"
+      class="speak-area hidden"
+    >
+
+      <div class="speak-label">
+        🎙️ 아준 정비팀장 따라 말하기
+      </div>
+
+      <div
+        id="speakText"
+        class="speak-text"
+      >
+      </div>
+
+      <button
+        id="speakDoneBtn"
+        class="speak-done-btn"
+        type="button"
+      >
+        말했어요! 👍
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- 성공 -->
+<!-- ================================================= -->
+
+<div
+  id="successModal"
+  class="modal hidden"
+>
+
+  <div class="modal-card success-card">
+
+    <div class="success-big">
+      🎉
+    </div>
+
+    <h2>
+      분리 성공!
+    </h2>
+
+    <div
+      id="successCarText"
+      class="success-car-text"
+    >
+      3호차
+    </div>
+
+    <p>
+      정비가 필요한 차량을 안전하게 분리했어요!
+    </p>
+
+    <div class="repair-animation">
+      🚃 ➜ ➜ ➜ 🏭
+    </div>
+
+    <button
+      id="finishMissionBtn"
+      class="finish-btn"
+      type="button"
+    >
+      🔧 정비고로 보내기
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<script src="script.js"></script>
+
 </body>
 </html>
